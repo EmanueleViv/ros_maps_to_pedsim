@@ -1,5 +1,5 @@
 <launch>
-  <arg name="map_path" default="."/>
+  <arg name="map_path" default="/home/emanuele/ds/performance_modelling/test_datasets/dataset/airlab/data"/>
   <arg name="map_name" default="map.yaml"/>
   <arg name="scenario_path" default="$(arg map_path)"/>
   <arg name="scenario_name" default="scene.xml"/>

@@ -69,7 +69,7 @@ def add_waypoints_and_agent(scenario, agents_info):
         w = waypoints[id]
         add_waypoint(scenario, id, w[0], w[1], w[2])
 
-    agents_keys = agents_info.keys()
+    agents_keys = list(agents_info.keys())
     agents_keys.remove('waypoints')
     for key in agents_keys:
         agent = agents_info[key]
@@ -139,11 +139,11 @@ def scenario_from_map(map_image, map_metadata, use_map_origin=False):
     y_min = np.maximum(0, y_free[0]-1)
     y_max = np.minimum(sz[1], y_free[-1]+2)
 
-    for x in xrange(x_min, x_max):
-        for y in xrange(y_min, y_max):
+    for x in list(range(x_min, x_max)):
+        for y in list(range(y_min, y_max)):
             is_free = map_binary[x, y]
             window = get_window(map_binary, x, y)
-            if ~is_free and np.any(window) and np.any(~window):
+            if np.all(~is_free) and np.any(window) and np.any(~window):
                 # conversion between world coordinates and pixel coordinates
                 # (x and y coordinates are inverted, and y is also flipped)
                 world_x = origin[0] + y * resolution
@@ -176,14 +176,13 @@ if __name__ == '__main__':
     agents_info_path = rospy.get_param("~agents_info_path", ".")
     agents_info_name = rospy.get_param("~agents_info_name", "agents.yaml")
 
-    with open(os.path.join(map_path, map_name)) as file:
-        map_metadata = yaml.safe_load(file)
+    with open(os.path.join(map_path, map_name)) as map_file:
+        map_metadata = yaml.safe_load(map_file)
 
     map_image = io.imread(os.path.join(map_path, map_metadata['image']))
 
     print("Loaded map in " + os.path.join(map_path, map_name)
           + " with metadata:")
-    print(map_metadata)
 
     scenario, map_walls = scenario_from_map(
         map_image, map_metadata, use_map_origin)

@@ -172,7 +172,7 @@ if __name__ == '__main__':
     scenario_path = rospy.get_param("~scenario_path", ".")
     scenario_name = rospy.get_param("~scenario_name", "scene.xml")
     use_map_origin = rospy.get_param("~use_map_origin", False)
-    add_agents = rospy.get_param("~add_agents", True)
+    add_agents = rospy.get_param("~add_agents", False)
     agents_info_path = rospy.get_param("~agents_info_path", ".")
     agents_info_name = rospy.get_param("~agents_info_name", "agents.yaml")
 
